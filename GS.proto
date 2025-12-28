@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package V1;
+
+
+
+
+message Arguments{}
+
+enum CommandType{
+  Propulsion =0;
+  TLE_REPORT =1;
+}
+
+message Command {
+  oneof command{
+    PropulsionCommand propulsion = 1;
+    ReportTLECommand TLE = 2;
+
+  }
+}
+message CommandResponse{
+    string response =1;
+}
+
+message Downlink{
+  bytes data =1;
+}
+
+message PropulsionCommand{
+  CommandType type = 1;
+  sint32 burn_time = 2;
+  sint32 burn_vector_x =3;
+  sint32 burn_vector_y =4;
+  sint32 burn_vector_z =5;
+}
+message ReportTLECommand{
+  CommandType type =2;
+}
