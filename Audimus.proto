@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package audimus;
+
+message Test{
+  string command =1;
+}
