@@ -1,4 +1,5 @@
-import ProtocolLayer
+from CommunicationsProtocol import ProtocolLayer
+
 
 class DataLinkLayer(ProtocolLayer.ProtocolLayer):
     def __init__(self, DLL_rx,DLL_tx, SDR_rx, SDR_tx):

@@ -24,13 +24,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rAudimus.proto\x12\x07\x61udimus\"\x17\n\x04Test\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rAudimus.proto\x12\x07\x61udimus\"\x12\n\x10\x41pplication_Data\"t\n\x11Presentation_Data\x12\x11\n\tkey_epoch\x18\x01 \x01(\x05\x12\x16\n\x0esession_number\x18\x02 \x01(\x05\x12\x18\n\x10\x61pplication_data\x18\x03 \x01(\t\x12\x1a\n\x12\x61uthentication_tag\x18\x04 \x01(\x0c\"\x0e\n\x0cSession_Datab\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'Audimus_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_TEST']._serialized_start=26
-  _globals['_TEST']._serialized_end=49
+  _globals['_APPLICATION_DATA']._serialized_start=26
+  _globals['_APPLICATION_DATA']._serialized_end=44
+  _globals['_PRESENTATION_DATA']._serialized_start=46
+  _globals['_PRESENTATION_DATA']._serialized_end=162
+  _globals['_SESSION_DATA']._serialized_start=164
+  _globals['_SESSION_DATA']._serialized_end=178
 # @@protoc_insertion_point(module_scope)

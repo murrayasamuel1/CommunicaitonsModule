@@ -1,4 +1,5 @@
-import ProtocolLayer
+from CommunicationsProtocol import ProtocolLayer
+
 
 class SessionLayer(ProtocolLayer.ProtocolLayer):
     def __init__(self, SL_rx,SL_tx, DLL_rx, DLL_tx):
