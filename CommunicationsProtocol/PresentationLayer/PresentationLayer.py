@@ -1,5 +1,8 @@
 from CommunicationsProtocol import ProtocolLayer
 import Audimus_pb2
+import os
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from Logger.Logger import LoggerFactory
 
 class PresentationLayer(ProtocolLayer.ProtocolLayer):
     def __init__(self, PL_rx,PL_tx, SL_rx, SL_tx, data_file):
@@ -8,34 +11,42 @@ class PresentationLayer(ProtocolLayer.ProtocolLayer):
         self.key_epoch = 0
         self.data_file = data_file
         self.session_number = self.read_session_number()
+        self.logger = LoggerFactory.get_logger(self.name)
 
 
-    def process_rx(self, msg):
-        message = self.decode(msg)
-        if message.session_number > self.session_number:
-            self.update_session_number(message.session_number)
-        return message.application_data
-
-    def process_tx(self, application_data):
-        msg = self.encode(application_data)
-        return msg
-
-    def encode(self, message):
-        msg = Audimus_pb2.Presentation_Data()
-        msg.key_epoch = self.key_epoch
-        msg.session_number = self.session_number
-        msg.application_data = message
-        return msg.SerializeToString()
-
-    def decode(self, msg):
-        message = Audimus_pb2.Presentation_Data()
-        message.ParseFromString(msg)
+    def process_rx(self, message):
+        message = self.deframe(message)
         return message
 
-    def encrypt(self):
+    def process_tx(self, message):
+        message = self.frame(message)
+        self.logger.info(str(message))
+        return message
+
+
+    def frame(self, message):
+        #create the pl_level header
+        msg = Audimus_pb2.Presentation_Message()
+        msg.key_epoch = self.key_epoch
+        msg.session_number = self.session_number
+        msg.application_message = message
+        return msg.SerializeToString()
+
+    def deframe(self, message):
+        pl_message = Audimus_pb2.Presentation_Message()
+        pl_message.ParseFromString(message)
+        if pl_message.session_number > self.session_number:
+            self.update_session_number(pl_message.session_number)
+        return pl_message.application_message
+
+
+    def encrypt(self, message):
         pass
 
-    def authenticate(self):
+    def dencrypt(self, message):
+        pass
+
+    def authenticate(self, message):
         pass
 
     def read_session_number(self):
@@ -45,8 +56,9 @@ class PresentationLayer(ProtocolLayer.ProtocolLayer):
                 return (int(session_number) + 1)
 
         except FileNotFoundError:
-            print(
-                f"Error: The file '{self.data_file}' was not found, could not retrieve session number")
+            print("file not found, writing file")
+            self.update_session_number(0)
+            return 0
         except Exception as e:
             print(f"An error occurred: {e}")
 
@@ -61,13 +73,13 @@ class PresentationLayer(ProtocolLayer.ProtocolLayer):
 
 class GroundStationPresentationLayer(PresentationLayer):
     def __init__(self, PL_rx,PL_tx, SL_rx, SL_tx):
-        super().__init__(PL_rx, PL_tx, SL_rx, SL_tx, "CommunicationsProtocol/GroundStationPresentationLayerData")
+        super().__init__(PL_rx, PL_tx, SL_rx, SL_tx, "CommunicationsProtocol/PresentationLayer/GroundStationData")
 
 
 
 class AudimusPresentationLayer(PresentationLayer):
     def __init__(self, PL_rx,PL_tx, SL_rx, SL_tx):
-        super().__init__(PL_rx, PL_tx, SL_rx, SL_tx, "CommunicationsProtocol/AudimusPresentationLayerData")
+        super().__init__(PL_rx, PL_tx, SL_rx, SL_tx, "CommunicationsProtocol/PresentationLayer/AudimusData")
 
 
 

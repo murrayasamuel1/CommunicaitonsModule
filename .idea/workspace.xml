@@ -5,7 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bc67f8c-bb93-43a8-9dd6-1d8d4e059258" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommunicationsProtocol/ApplicationLayer/ApplicationLayer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommunicationsProtocol/ApplicationLayer/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommunicationsProtocol/PresentationLayer/AudimusData" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommunicationsProtocol/PresentationLayer/GroundStationData" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommunicationsProtocol/SessionLayer/Session.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Logger/Logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Logger/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestTXAudimus" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestTXGroundStation" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/Application Layer .log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/Data Link Layer     .log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/Data Link Layer   .log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/Data Link Layer.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/Presentation Layer.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/Session Layer     .log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ACM.py" beforeDir="false" afterPath="$PROJECT_DIR$/ACM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Audimus.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Audimus.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Audimus_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Audimus_pb2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommunicationsProtocol/DataLinkLayer/DataLinkLayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommunicationsProtocol/DataLinkLayer/DataLinkLayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommunicationsProtocol/PresentationLayer/PresentationLayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommunicationsProtocol/PresentationLayer/PresentationLayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommunicationsProtocol/ProtocolLayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommunicationsProtocol/ProtocolLayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommunicationsProtocol/SessionLayer/SessionLayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommunicationsProtocol/SessionLayer/SessionLayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GSCM.py" beforeDir="false" afterPath="$PROJECT_DIR$/GSCM.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,16 +59,24 @@
     "Python.ACM.executor": "Run",
     "Python.GSCM.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "PythonVersion",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/murra/Capstone/CommunicationsModule/GSCM.py",
+    "last_opened_file_path": "C:/Users/murra/Capstone/CommunicationsModule/CommunicationsProtocol",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\murra\Capstone\CommunicationsModule\CommunicationsProtocol" />
       <recent name="C:\Users\murra\Capstone\CommunicationsModule" />
-      <recent name="C:\Users\murra\Capstone\CommunicationsModule\ProtocolLayers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\murra\Capstone\CommunicationsModule\CommunicationsProtocol\SessionLayer" />
+      <recent name="C:\Users\murra\Capstone\CommunicationsModule\CommunicationsProtocol\DataLinkLayer" />
+      <recent name="C:\Users\murra\Capstone\CommunicationsModule\CommunicationsProtocol\PresentationLayer" />
+      <recent name="C:\Users\murra\Capstone\CommunicationsModule\CommunicationsProtocol" />
+      <recent name="C:\Users\murra\Capstone\CommunicationsModule" />
     </key>
   </component>
   <component name="RunManager" selected="Compound.Run">
@@ -122,5 +154,16 @@
       <updated>1767658340154</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

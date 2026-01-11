@@ -1,20 +1,35 @@
 import asyncio
 
-import DataLinkLayer
-import PresentationLayer
-import SessionLayer
+from CommunicationsProtocol.ApplicationLayer.ApplicationLayer import AudimusApplicationLayer
+from CommunicationsProtocol.PresentationLayer.PresentationLayer import AudimusPresentationLayer
+from CommunicationsProtocol.DataLinkLayer.DataLinkLayer import AudimusDataLinkLayer
+from CommunicationsProtocol.SessionLayer.SessionLayer import AudimusSessionLayer
 
 
-async def client_tx(writer, SDR_tx):
-    print("client sender started")
+def read_lines(path):
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            yield line.rstrip("\n")
+
+async def app_rx(AL_rx):
+    while True:
+        message = await AL_rx.get()
+
+async def app_tx(AL_tx):
+    for line in read_lines("TestTXAudimus"):
+        await AL_tx.put(line)
+        await asyncio.sleep(1)
+
+
+
+async def tcp_tx(writer, SDR_tx):
     while True:
         msg = await SDR_tx.get()      # wait for outgoing message
         writer.write(msg)               # send it
         await writer.drain()            # flush
 
 
-async def client_rx(reader, SDR_rx):
-    print("client receiver started")
+async def tcp_rx(reader, SDR_rx):
     while True:
         msg = await reader.read(1024)   # wait for incoming data
         if not msg:
@@ -22,8 +37,13 @@ async def client_rx(reader, SDR_rx):
         await SDR_rx.put(msg)         # push into RX queue
 
 
+
 async def run_client(host, port):
     reader, writer = await asyncio.open_connection(host, port)
+
+    #Application layer queues
+    AL_rx = asyncio.Queue()
+    AL_tx = asyncio.Queue()
 
     # presentation layer queues
     PL_rx = asyncio.Queue()
@@ -42,13 +62,22 @@ async def run_client(host, port):
     SDR_tx = asyncio.Queue()
 
     # create instances of each layer
-    pl = PresentationLayer.AudimusPresentationLayer(PL_rx, PL_tx, SL_rx, SL_tx)
-    sl = SessionLayer.AudimusSessionLayer(SL_rx, SL_tx, DLL_rx, DLL_tx)
-    dll = DataLinkLayer.AudimusDataLinkLayer(DLL_rx, DLL_tx, SDR_rx, SDR_tx)
+    al = AudimusApplicationLayer(AL_rx, AL_tx,PL_rx,PL_tx)
+    pl = AudimusPresentationLayer(PL_rx, PL_tx, SL_rx, SL_tx)
+    sl = AudimusSessionLayer(SL_rx, SL_tx, DLL_rx, DLL_tx)
+    dll = AudimusDataLinkLayer(DLL_rx, DLL_tx, SDR_rx, SDR_tx)
+
+    # run application rx and tx coroutines
+    AL_rx = asyncio.create_task(app_rx(AL_rx))
+    AL_tx = asyncio.create_task(app_tx(AL_tx))
+
+    # run application layer coroutines
+    al_tx_handler = asyncio.create_task(al.tx())
+    al_rx_handler = asyncio.create_task(al.rx())
 
     #run satellite rx and tx coroutines
-    rx = asyncio.create_task(client_rx(reader, SDR_rx))
-    tx = asyncio.create_task(client_tx(writer, SDR_tx))
+    rx = asyncio.create_task(tcp_rx(reader, SDR_rx))
+    tx = asyncio.create_task(tcp_tx(writer, SDR_tx))
 
     # run presentation layer coroutines
     pl_tx_handler = asyncio.create_task(pl.tx())
@@ -61,19 +90,6 @@ async def run_client(host, port):
     # run data link layer coroutines
     dll_tx_handler = asyncio.create_task(dll.tx())
     dll_rx_handler = asyncio.create_task(dll.rx())
-
-    # send bytes, not strings
-    await PL_tx.put("hi")
-    await asyncio.sleep(1)
-    await PL_tx.put("my")
-    await asyncio.sleep(1)
-    await PL_tx.put("name")
-    await asyncio.sleep(1)
-    await PL_tx.put("is")
-    await asyncio.sleep(1)
-    await PL_tx.put("ben")
-
-
 
     await asyncio.gather(tx, rx)
 
